@@ -3,7 +3,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View,FlatList, TouchableOpacity,TextInput, ActivityIndicator } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import _ from 'lodash'
-
+import BottomDrawer from 'rn-bottom-drawer';
+const TAB_BAR_HEIGHT = 200;
 export default class SearchBarExample extends React.Component {
   constructor(props){
     super(props)
@@ -13,8 +14,16 @@ export default class SearchBarExample extends React.Component {
       temp:[],
       city:"",
       citySelected:false,
+      TAB_BAR_HEIGHT: 200,
     }
     this.arrayholder = []
+  }
+  renderContent = () => {
+    return (
+      <View>
+        <Text>Get directions to your location</Text>
+      </View>
+    )
   }
   componentDidMount() {
     this.setState({
@@ -48,6 +57,7 @@ export default class SearchBarExample extends React.Component {
     this.setState({data:newData,city:search})
   }   
   render(){
+    const {TAB_BAR_HEIGHT } = this.state
     if (this.state.isLoading === true) {
       //Loading View while data is loading
       return (
@@ -95,6 +105,9 @@ export default class SearchBarExample extends React.Component {
                   </TouchableOpacity>
               )}
             />}
+             <BottomDrawer containerHeight={430} shadow={true} offset={TAB_BAR_HEIGHT} onCollapsed={()=>{this.setState({TAB_BAR_HEIGHT:0})}} >
+                {this.renderContent()}
+            </BottomDrawer>
           </View>
         </View>
       </View>
